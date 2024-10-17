@@ -1,7 +1,8 @@
 let divison = document.querySelector(".apidata");
-let userinputbe = document.querySelector("#userinput");
-
+let userinput = document.querySelector("#userinput");
+let pokeimagesdivison = document.querySelector(".pokeimagesdivision");
 let available_pokemon = [
+  "ditto",
   "bulbasaur",
   "venusaur",
   "charmander",
@@ -12,7 +13,7 @@ let available_pokemon = [
   "blastoise",
   "caterpie",
   "metapod",
-  " butterfree",
+  "butterfree",
   "weedle",
   "kakuna",
   "beedrill",
@@ -22,84 +23,139 @@ let available_pokemon = [
   "rattata",
   "raticate",
 ];
+let i;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const divison = document.querySelector(".apidata");
+  const userinput = document.querySelector("#userinput");
+  const pokeimagesdivison = document.querySelector(".pokeimagesdivision");
+
+  document.querySelector(".nightmode").addEventListener("click", () => {
+    document.body.classList.toggle("lightmode");
+  });
+
+  //search fuction
+
+  const container = document.getElementsByClassName("userdivdata");
+  //css for showing the data in js
+  const suggetions = document.getElementById("suggetions");
+  userinput.addEventListener("keyup", (e)=>{
+    if (userinput.value === null) {
+             suggetions.style.display = "none";
+    }
+    let results = [];
+    let input = userinput.value.toLowerCase();
+    if (input.length) {
+          results = available_pokemon.filter((item) => {
+            return item.toLocaleLowerCase().includes(input.toLocaleLowerCase());
+          });
+        }
+        renderResults(results);
+  })
+
+
+  });
+
+  function renderResults(results) {
+    if (!results.length) {
+      return suggetions.classList.remove("show");
+    }
+    let content = results
+      .map((item) => {
+        return `<li>${item}</li>`;
+      })
+      .join("");
+
+    // console.log(content);
+    suggetions.innerHTML = `
+   <ul>
+            <li class="suggetion_content">${content}</li>
+          </ul>`;
+  }
+
+  // .addEventListener("input", async ()=>{
+  //   const searchvalue = userinput.value
+  //   console.log(searchvalue);
+  //   const res = await fetch('./pika.json');
+  //   const pokedatas = await res.json()
+  //   console.log(pokedatas.pokemon)
+  //   // console.log('pokedatas: ', pokedatas);
+  //   //get matches to current text input
+  //   let matches = pokedatas.pokemon.filter(pokedata => {
+  //     const regex = new RegExp(`^${searchvalue}`, 'gi');
+  //     return pokedata.pokemon.match(regex)
+  //   });
+  //   console.log(matches)
+
+  // });
+
+  //data load
   document.querySelector("#submit").addEventListener("click", () => {
-    let uservalue = document.querySelector("#userinput").value;
-    let url = `https://pokeapi.co/api/v2/pokemon/${uservalue}`;
-    divison.textContent = "";
-    if (uservalue != "") {
+    const uservalue = userinput.value.trim().toLowerCase();
+    console.log("User input value: ", uservalue); // Debug user input
+
+    if (uservalue) {
+      const url = `https://pokeapi.co/api/v2/pokemon/${uservalue}`;
+      console.log("Constructed URL: ", url); // Debug URL
+
+      divison.textContent = ""; // Clear existing content
+      pokeimagesdivison.innerHTML = "";
+
       fetch(url)
         .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
           return res.json();
         })
         .then((data) => {
-          console.log(data);
+          console.log("Fetched data: ", data); // Debug fetched data
 
-          let htmldata = `
-       <h3 class = "pokemonheight"> Height of ${data.name} is ${data.height}</h3>
-       <h3 class = "pokemonexe"> And their Base exprience is ${data.base_experience}</h3>
-      `;
+          const htmldata = `
+            <h3 class="pokemonheight">Height of ${data.name} is: ${data.height}</h3>
+            <h3 class="pokemonexe">And their Base experience is: ${data.base_experience}</h3>
+          `;
           divison.insertAdjacentHTML("afterbegin", htmldata);
-          // divison.appendChild(htmldata)
-          userinputbe.value = "";
+
+          const imagesArray = data.sprites;
+          const pokeimagehtml = `
+            <img class="pokeimgs" src="${imagesArray.front_default}" alt="${data.name}'s front default">
+            <img class="pokeimgs" src="${imagesArray.back_default}" alt="${data.name}'s back default">
+            <img class="pokeimgs" src="${imagesArray.front_female}" alt="${data.name}'s front female default">
+            <img class="pokeimgs" src="${imagesArray.back_female}" alt="${data.name}'s back female default">
+          `;
+          pokeimagesdivison.insertAdjacentHTML("afterbegin", pokeimagehtml);
+
+          document.querySelectorAll(".divisionborder").forEach((border) => {
+            border.classList.add("forborder");
+          });
+        })
+        .catch((err) => {
+          console.error("Error: ", err); // Log error to console
+          const errorhtml = `
+            <h3>Could not fetch the data. Error: ${err.message}</h3>
+          `;
+          divison.insertAdjacentHTML("afterbegin", errorhtml);
         });
     } else {
-      let htmldata = `
-        <h3> Enter a pokemon name from first genration </h3>
+      const htmldata = `
+        <h3>Enter a Pokémon name from the first generation!➕🌟⚡</h3><span>!(*￣(￣　*)</span>
       `;
       divison.insertAdjacentHTML("afterbegin", htmldata);
+      pokeimagesdivison.innerHTML = "";
     }
   });
-});
+// });
 
-//todo make it async await
-// add click down page to show all the available pokemon
-// add suggestons
-// make it mistake proof if someone enter the wrong pokemon
-// run through array to chaeck if the usergiven poke mon is availvable or not
-// toggle to darkmode
+// const search = document.getElementById('userinput').value.toLowerCase()
+// const matchList = document.getElementById('suggetions')
+// const  searchstate = async searchText => {
+//   const res = await fetch('./pika.json')
+//   const pokedata = await res.json();
+//   console.log('pokedata: ', pokedata);
 
-// let pokemon_name = document.querySelector(".uservalue");
-// let pokedata = document.querySelector(".container");
-// let submitbtn = document.querySelector(".submitbtn");
-// let globalpokedata = []
-// submitbtn.addEventListener("click", () => {
-//   uservalue = pokemon_name.value;
-//   console.log(uservalue);
-//   let url = `https://pokeapi.co/api/v2/pokemon/${uservalue}`;
-// fetch(url)
-//   .then((res) => {
-//     return res.json();
-//   })
-//   .then((data) => {
-//     heightnum = data.height;
-
-//     console.log(data);
-//     console.log(data.name)
-//     console.log(data.weight)
-//     console.log(data.sprites["back_default"])
-//     pokedata.innerHTML = data.height;
-//   })
-//   .catch((err)=>{
-//     pokedata.innerHTML = err
-//   })
-
-//   fetch(url)
-//   .then(response=>{
-//     if (!response.ok){
-//       throw new Error("network error")
-
-//     }
-//     return response.json()
-//   })
-//   .then(data=>{
-//     globalpokedata = data
-//     processData(globalpokedata);
-//   })
-//   .catch(error=>{
-//     console.log(error);
-//   })
-
-//     pokedata = globalpokedata.height
+// }
+// search.addEventListener('input', ()=>searchstate(search));
+// search.addEventListener('input', ()=>{
+//   console.log(search)
 // });

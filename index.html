@@ -1,40 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pokemon</title>
-    <link
-      rel="shortcut icon"
-      href="./static/html_24dp_FILL0_wght400_GRAD0_opsz24.svg"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="poke.css" />
-  </head>
-  <body>
-    <div class="header">
-      <h1>Poke api project</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PokeData🌟</title>
+  <link rel="shortcut icon" href="./static/star-svgrepo-com.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="poke.css" />
+</head>
+
+<body class="">
+  <div class="header">
+    <h1>Poke api project</h1>
+    <span class="nightmode">
+      <img src="./static/darkmode.svg" alt="" />
+    </span>
+  </div>
+
+  <div class="navbar">
+    <nav class="navlist">
+      <a href="#">Home</a>
+      <a href="/pokedata.html">All Pokedata</a>
+    </nav>
+  </div>
+
+  <div class="userdivdata">
+    <div class="inputdata">
+      <input type="text" class="userdata" id="userinput" autofocus autocomplete="off" />
+              
+        <div id="suggetions">
+         
+      </div>
+      <button class="userdata" id="submit">GET</button>
     </div>
 
-    <div class="navbar">
-      <nav class="navlist">
-        <a href="index.html">Home</a>
-        <a href="#">History</a>
-        <a href="#">About</a>
-      </nav>
-    </div>
-
-    <div class="userdivdata">
-     
-        <input type="text" class="userdata" id="userinput" autofocus autocomplete="off" />
-        <button class="userdata" id="submit">GET</button>
-    
-    </div>
     <div class="apidata">
       <!-- <h2 class = "pokemonvalue">${data.height}</h2>
        <h3 class = "pokemonvalue">${data.base_experience}</h3>
        <h3 class="nullvalue pokemonvalue"> Enter a pokemon name from first genration </h3> -->
     </div>
+    <div class="divisionborder"></div>
+    <div class="pokeimagesdivision"></div>
+    <div class="divisionborder"></div>
+    <section class="about">
+      <p>
+        Welcome to <strong>PokeData</strong>🌟 Here, you can explore the vast
+        and vibrant world of Pokémon with a treasure trove of information at
+        your fingertips. Whether you're a seasoned Pokémon Trainer or just
+        starting your journey, our site offers detailed profiles on all your
+        favorite Pokémon, including stats, evolutions, and moves. Dive deep into
+        the lore and discover fascinating facts about each species, from the
+        iconic Pikachu ⚡ to the legendary Mewtwo 🧬. Our user-friendly
+        interface makes it easy to navigate through generations, regions, and
+        types. Plus, stay updated with the latest news, events, and tips to
+        enhance your Pokémon adventures. Join our community of enthusiasts and
+        become a Pokémon Master today! 🎮✨
+      </p>
+    </section>
+    <footer>
+      <div class="footer-content">
+        <p>© 2024 PokeData Hub. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/about">About Us</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://facebook.com" target="_blank">Facebook</a>
+          <a href="https://twitter.com" target="_blank">Twitter</a>
+          <a href="https://instagram.com" target="_blank">Instagram</a>
+        </div>
+      </div>
+    </footer>
+
     <script src="poke.js"></script>
-  </body>
+    <!-- <script src="scipt.js"></script> -->
+</body>
+
 </html>
